@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            transition: width 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar h3, .sidebar ul {
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed h3, .sidebar.collapsed ul {
+            opacity: 0;
+        }
+
+        .sidebar h3 {
+            margin: 0;
+            padding-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: -20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background-color: #555;
+        }
+
+        /* Content styling */
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+            width: calc(100% - 220px);
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        .sidebar.collapsed + .content {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+        }
+
+        /* Dashboard styling */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .dashboard-card {
+            flex: 1 1 calc(25% - 20px);
+            max-width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .dashboard-card h3 {
+            margin: 0;
+        }
+
+        .dashboard-card p {
+            margin-top: 10px;
+            flex-grow: 1;
+        }
+
+        /* Responsive dashboard */
+        @media (max-width: 1024px) {
+            .dashboard-card {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-card {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-card {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* Search bar styling */
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .search-bar input[type="text"]:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="toggle-btn" onclick="toggleSidebar()">&#9776;</button>
+        <h3>Dashboard</h3>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="content" id="content">
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search...">
+        </div>
+        <div class="dashboard">
+            <div class="dashboard-card">
+                <h3>Card 1</h3>
+                <p>Some content for card 1.</p>
+            </div>
+            <div class="dashboard-card">
+                <h3>Card 2</h3>
+                <p>Some content for card 2.</p>
+            </div>
+            <div class="dashboard-card">
+                <h3>Card 3</h3>
+                <p>Some content for card 3.</p>
+            </div>
+            <div class="dashboard-card">
+                <h3>Card 4</h3>
+                <p>Some content for card 4.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('collapsed');
+        }
+    </script>
+</body>
+</html>
