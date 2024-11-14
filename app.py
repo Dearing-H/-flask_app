@@ -2,14 +2,15 @@ from flask import Flask, render_template, request, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from models import User
+from setup_dp import User
+
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 #set up the database engine and session
-engine = create_engine("sqlite:///your_database.db") #replace with your acutal DB URI
+engine = create_engine("sqlite:///todo.db") #replace with your acutal DB URI
 Session = sessionmaker(bind=engine)
-db_session = session()
+db_session = Session()
 
 #define user details
 username = "Boss"
