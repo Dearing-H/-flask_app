@@ -31,6 +31,27 @@ print("User added to the database")
 def home():
     return render_template('index.html')
 
+
+@app.route('/sign_up', methods=["GET", "POST"])
+def sign_up():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        confirm
+
+        #hash the password
+        hashed_password = generate_password_hash(password)
+
+        #create a new user instance
+        new_user = User(username=username, password=hashed_password)
+
+        #add the new user to the database
+        db_session.add(new_user)
+        db_session.commit()
+        flash("You have successfully signed up", "success")
+        return render_template('login.html')
+    return render_template('sign_up.html')
+
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":

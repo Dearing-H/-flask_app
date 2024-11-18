@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function changeLanguage() {
+            const language = document.getElementById('language').value;
+            document.documentElement.lang = language;
+
+            const translations = {
+                en: {
+                    settings: "Settings",
+                    colorScheme: "Color Scheme",
+                    textSize: "Text Size",
+                    language: "Language",
+                    notifications: "Notifications",
+                    enableNotifications: "Enable Notifications",
+                    updatePassword: "Update Password",
+                    newPassword: "New Password",
+                    confirmPassword: "Confirm New Password",
+                    saveSettings: "Save Settings"
+                },
+                es: {
+                    settings: "Configuraciones",
+                    colorScheme: "Esquema de colores",
+                    textSize: "Tamaño de texto",
+                    language: "Idioma",
+                    notifications: "Notificaciones",
+                    enableNotifications: "Habilitar notificaciones",
+                    updatePassword: "Actualizar contraseña",
+                    newPassword: "Nueva contraseña",
+                    confirmPassword: "Confirmar nueva contraseña",
+                    saveSettings: "Guardar configuraciones"
+                },
+                fr: {
+                    settings: "Paramètres",
+                    colorScheme: "Schéma de couleurs",
+                    textSize: "Taille du texte",
+                    language: "Langue",
+                    notifications: "Notifications",
+                    enableNotifications: "Activer les notifications",
+                    updatePassword: "Mettre à jour le mot de passe",
+                    newPassword: "Nouveau mot de passe",
+                    confirmPassword: "Confirmer le nouveau mot de passe",
+                    saveSettings: "Enregistrer les paramètres"
+                },
+                de: {
+                    settings: "Einstellungen",
+                    colorScheme: "Farbschema",
+                    textSize: "Textgröße",
+                    language: "Sprache",
+                    notifications: "Benachrichtigungen",
+                    enableNotifications: "Benachrichtigungen aktivieren",
+                    updatePassword: "Passwort aktualisieren",
+                    newPassword: "Neues Passwort",
+                    confirmPassword: "Neues Passwort bestätigen",
+                    saveSettings: "Einstellungen speichern"
+                }
+            };
+
+            document.querySelector('h1').textContent = translations[language].settings;
+            document.querySelector('label[for="color-scheme"]').textContent = translations[language].colorScheme;
+            document.querySelector('label[for="text-size"]').textContent = translations[language].textSize;
+            document.querySelector('label[for="language"]').textContent = translations[language].language;
+            document.querySelector('label[for="notifications"]').textContent = translations[language].notifications;
+            document.querySelector('label[for="notifications"] + input').nextSibling.textContent = translations[language].enableNotifications;
+            document.querySelector('label[for="password"]').textContent = translations[language].updatePassword;
+            document.getElementById('password').placeholder = translations[language].newPassword;
+            document.getElementById('confirm-password').placeholder = translations[language].confirmPassword;
+            document.querySelector('button').textContent = translations[language].saveSettings;
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800 text-base">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-white shadow-md p-5">
+            <h2 class="text-lg font-semibold mb-5">FocusFlow</h2>
+            <nav class="space-y-3">
+                <a href="#" class="block text-gray-600 hover:text-blue-600">Dashboard</a>
+                <a href="#" class="block text-gray-600 hover:text-blue-600">Settings</a>
+            </nav>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="w-3/4 p-10">
+            <h1 class="text-2xl font-bold mb-5">Settings</h1>
+
+            <!-- Color Scheme -->
+            <div class="bg-white shadow rounded-lg p-6 mb-5">
+                <label for="color-scheme" class="block mb-2">Color Scheme</label>
+                <select id="color-scheme" class="block w-full p-2 border border-gray-300 rounded" onchange="document.body.className = this.value">
+                    <option value="bg-white text-black">Default</option>
+                    <option value="bg-black text-white">Black and White</option>
+                </select>
+            </div>
+
+            <!-- Text Size -->
+            <div class="bg-white shadow rounded-lg p-6 mb-5">
+                <label for="text-size" class="block mb-2">Text Size</label>
+                <select id="text-size" class="block w-full p-2 border border-gray-300 rounded" onchange="document.body.className = this.value">
+                    <option value="text-sm">Small</option>
+                    <option value="text-base">Medium</option>
+                    <option value="text-lg">Large</option>
+                </select>
+            </div>
+
+            <!-- Language -->
+            <div class="bg-white shadow rounded-lg p-6 mb-5">
+                <label for="language" class="block mb-2">Language</label>
+                <select id="language" class="block w-full p-2 border border-gray-300 rounded" onchange="changeLanguage()">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                </select>
+            </div>
+
+            <!-- Notifications -->
+            <div class="bg-white shadow rounded-lg p-6 mb-5">
+                <label for="notifications" class="block mb-2">Notifications</label>
+                <input type="checkbox" id="notifications" class="mr-2"> Enable Notifications
+            </div>
+
+            <!-- Update Password -->
+            <div class="bg-white shadow rounded-lg p-6 mb-5">
+                <label for="password" class="block mb-2">Update Password</label>
+                <input type="password" id="password" class="block w-full p-2 border border-gray-300 rounded mb-2" placeholder="New Password">
+                <input type="password" id="confirm-password" class="block w-full p-2 border border-gray-300 rounded" placeholder="Confirm New Password">
+            </div>
+
+            <!-- Save Button -->
+            <div class="mb-5">
+                <button class="w-full p-2 bg-blue-500 text-white rounded">Save Settings</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
