@@ -120,15 +120,19 @@
     <!-- Container for Login and Signup -->
     <div class="container" id="auth-container">
         <!-- Logo Image -->
-        <img src="https://files.oaiusercontent.com/file-5JnlfgbcpZ5XbEJFTBrWsLf7?se=2024-11-07T00%3A32%3A18Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D9cbe29df-afe2-4b62-81a5-807d16e8db7f.webp&sig=Yg25FHtlPX8B4qM9%2BdGAgWYhub5Vh0kpNss9IaMBaVc%3D" alt="FocusFlow Logo">
+        <img src="https://r2.erweima.ai/imgcompressed/compressed_4c3487e63d5e4a421af2d87f3dc68b53.webp" alt="FocusFlow Logo">
         <!-- Main Heading -->
         <h1>FocusFlow</h1>
         <!-- Button Container for Login and Signup -->
         <div class="btn-container" id="btn-container">
             <!-- Login Button -->
-            <button id="login-btn" onclick="window.location.href='/login'">Login</button>
-            <!-- Signup Button -->
-            <button id="signup-btn">Sign Up</button>
+            <a href="{{ url_for('login') }}">
+                <button class="button" >Login</button>
+            </a>  
+
+            <a href="{{ url_for('sign_up') }}">
+                <button class="button" >Sign Up</button>
+            </a>  
         </div>
 
         <!-- Login Form -->

@@ -12,11 +12,19 @@
 <body class="bg-gray-100">
     <div class="min-h-screen p-6">
         <!-- Main Header -->
-        <header class="mb-10 text-center">
+        <header class="mb-10 flex justify-between items-center">
             <!-- Title of the application -->
-            <h1 class="text-4xl font-bold text-gray-800 mb-2">FocusFlow</h1>
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">FocusFlow</h1>
+                <!-- User Info -->
+                <p class="text-gray-700">You are logged in as <strong>{{ session['user'] }}</strong></p>
+            </div>
+            <!-- Logout Button -->
+            <a href="{{ url_for('index') }}" 
+               class="mt-2 inline-block py-2 px-4 bg-red-500 text-white font-semibold rounded hover:bg-red-600">
+                Logout
+            </a>
         </header>
-
         <!-- Main Content -->
         <div class="flex gap-6">
             <!-- Navigation Sidebar -->
@@ -28,7 +36,7 @@
                     <ul class="space-y-3">
                         <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600"><span></span> </a></li>
                         <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600"><span></span> </a></li>
-                        <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600"><span></span> </a></li>
+                        <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600"><span></span> Dashboard</a></li>
                         <li><a href="#" class="flex items-center gap-2 text-gray-700 hover:text-blue-600"><span>⚙️</span> Settings</a></li>
                     </ul>
                 </nav>
@@ -36,29 +44,29 @@
 
             <!-- Dashboard Content -->
             <div class="flex-1 space-y-6">
-                <div class="grid grid-cols-3 gap-6">
+                <!-- Top Section: Task Input and Completed Tasks -->
+                <div class="flex gap-6">
                     <!-- Task Input Section -->
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="flex-1 bg-white p-6 rounded-lg shadow-lg">
                         <!-- Section title -->
                         <h3 class="text-lg font-semibold text-gray-800 mb-4">Task Input</h3>
                         <!-- Textarea for task input -->
-                        <textarea id="task-input" class="w-full h-40 p-2 border rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Type your tasks here..."></textarea>
-                        <!-- Button to add task -->
-                        <button onclick="addTask()" class="mt-2 w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">Add Task</button>
-                    </div>
-
-                    <!-- To-Do Tasks Section -->
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <!-- Section title -->
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">To-Do Tasks</h3>
-                        <!-- List of to-do tasks -->
-                        <ul id="todo-tasks" class="list-disc pl-5 space-y-2">
-                            <!-- To-Do tasks will be added here -->
-                        </ul>
+                        <form action="{{ url_for('add_task') }}" method="post">
+                            <textarea name="task_description" id="task_description" 
+                                      class="w-full h-20 p-2 border rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" 
+                                      placeholder="Type your tasks here..."></textarea>
+                            <!-- Date input for task due date -->
+                            <div class="mt-4">
+                                <label for="due_date" class="block text-gray-700">Due Date</label>
+                                <input type="date" name="due_date" id="due_date" 
+                                       class="w-full p-2 border rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            </div>
+                            <button type="submit" class="mt-2 w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">Add Task</button>
+                        </form>                        
                     </div>
 
                     <!-- Completed Tasks Section -->
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="flex-1 bg-white p-6 rounded-lg shadow-lg">
                         <!-- Section title -->
                         <h3 class="text-lg font-semibold text-gray-800 mb-4">Completed Tasks</h3>
                         <!-- List of completed tasks -->
@@ -70,119 +78,30 @@
                     </div>
                 </div>
 
-                <!-- Event Countdown (Details) Section -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
+                <!-- To-Do Tasks Section -->
+                <!-- <div class="bg-white p-10 rounded-lg shadow-lg"></div> -->
                     <!-- Section title -->
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Event Countdown</h3>
-                    <div class="grid grid-cols-2 gap-6">
-                        <!-- Left Column -->
-                        <div class="space-y-4">
-                            <!-- Event list dropdown -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Event List</label>
-                                <select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                                    <option>English Advanced</option>
-                                    <option>Business Report</option>
-                                    <option>Math Standard</option>
-                                    <option selected>Software Engineer</option>
-                                </select>
-                            </div>
-                            <!-- Buttons to add or remove events -->
-                            <div class="flex space-x-2">
-                                <button class="p-2 bg-gray-200 rounded-full hover:bg-gray-300">+</button>
-                                <button class="p-2 bg-gray-200 rounded-full hover:bg-gray-300">-</button>
-                            </div>
-                            <!-- Checkbox for launch at login -->
-                            <div class="flex items-center">
-                                <input type="checkbox" id="launch-login" class="rounded text-blue-600">
-                                <label for="launch-login" class="ml-2 text-gray-700">Launch at login</label>
-                            </div>
-                            <!-- About button -->
-                            <button class="w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">About</button>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">To-Do Tasks</h3>
+                    <!-- List of to-do tasks -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {% for todo in todos %}
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 shadow-sm transition-transform transform hover:scale-105 hover:shadow-md">
+                            <p class="text-gray-800 font-semibold truncate">{{ todo.task }}</p>
+                            <p class="text-sm text-gray-600 mt-2">Due: {{ todo.due_date }}</p>
+                            <p class="text-sm text-gray-600 mt-1" id="time-remaining-{{ todo.id }}"></p>
+                            <button class="mt-4 w-full py-2 px-4 bg-green-500 text-white text-sm font-medium rounded hover:bg-green-600">Mark as Done</button>
                         </div>
-
-                        <!-- Right Column -->
-                        <div class="space-y-4">
-                            <!-- Input for event title -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Title</label>
-                                <input type="text" value="Software Engineer" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                            </div>
-                            <!-- Input for event date -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Date</label>
-                                <input type="date" value="2024-04-12" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                            </div>
-                            <!-- Notification settings -->
-                            <div class="space-y-2">
-                                <!-- Checkbox for time element -->
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="time-element" class="rounded">
-                                    <label for="time-element" class="ml-2 text-gray-700">Time element</label>
-                                </div>
-                                <!-- Checkbox and dropdowns for notification settings -->
-                                <div class="flex items-center">
-                                    <input type="checkbox" id="notify-me" class="rounded">
-                                    <label for="notify-me" class="ml-2 text-gray-700">Notify me</label>
-                                    <select class="ml-2 rounded-md border-gray-300 shadow-sm">
-                                        <option>1</option>
-                                    </select>
-                                    <select class="ml-2 rounded-md border-gray-300 shadow-sm">
-                                        <option>Hour</option>
-                                    </select>
-                                    <span class="ml-2 text-gray-700">before the event</span>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-            </div>
 
-            <!-- Notifications Panel -->
-            <div class="w-64 bg-white rounded-lg shadow-lg p-4">
-                <!-- Notifications title -->
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Notifications</h2>
-                <!-- List of notifications -->
-                <ul class="space-y-2 text-gray-600">
-                    <li class="text-sm">• </li>
-                    <li class="text-sm">• </li>
-                    <li class="text-sm">• </li>
-                </ul>
             </div>
         </div>
 
         <!-- Footer -->
-        <footer class="mt-10 text-center text-gray-600 text-sm">
-            <!-- Footer content -->
-            © 2024 FocusFlow
+        <footer class="mt-10 text-center text-gray-600">
+            <p>&copy; 2023 FocusFlow. All rights reserved.</p>
         </footer>
     </div>
-
-    <script>
-        // Function to add a task to the to-do list
-        function addTask() {
-            const taskInput = document.getElementById('task-input');
-            const taskText = taskInput.value.trim();
-            if (taskText) {
-                const todoTasks = document.getElementById('todo-tasks');
-                const li = document.createElement('li');
-                li.className = 'text-gray-700';
-                li.textContent = taskText;
-                // Set onclick event to mark task as completed
-                li.onclick = function() {
-                    completeTask(this);
-                };
-                todoTasks.appendChild(li);
-                taskInput.value = '';
-            }
-        }
-
-        // Function to mark a task as completed
-        function completeTask(taskElement) {
-            const completedTasks = document.getElementById('completed-tasks');
-            taskElement.onclick = null; // Remove onclick event
-            completedTasks.appendChild(taskElement);
-        }
-    </script>
 </body>
 </html>
